@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>kafcam</artifactId>
+        <groupId>org.app</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>integration-service-starter</artifactId>
+
+<dependencies>
+
+    <dependency>
+        <groupId>org.app</groupId>
+        <artifactId>adapter-primary-rest</artifactId>
+        <version>${module.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.app</groupId>
+        <artifactId>use-case</artifactId>
+        <version>${module.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.app</groupId>
+        <artifactId>adapter-secondary-event-management</artifactId>
+        <version>${module.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.app</groupId>
+        <artifactId>adapter-secondary-repository</artifactId>
+        <version>${module.version}</version>
+    </dependency>
+
+</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+                <configuration>
+                    <mainClass>org.app.integration.service.starter.KafcamApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

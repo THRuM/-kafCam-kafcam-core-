@@ -1,0 +1,291 @@
+swagger: '2.0'
+info:
+  description: 'KafCam Api '
+  version: 1.0.0
+  title: KafCam
+host: localhost
+basePath: /
+tags:
+  - name: Currency
+    description: Everything about currency and price
+schemes:
+  - https
+  - http
+paths:
+  /currency/{currencySymbol}:
+    get:
+      tags:
+        - Currency
+      summary: 'Get currency information'
+      description: 'Return information about a specific currency'
+      operationId: getCurrencyBySymbol
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/currencySymbolInPath'
+      responses:
+          200:
+            $ref: '#/responses/singleCurrency'
+          400:
+            $ref: '#/responses/badRequest'
+          404:
+            $ref: '#/responses/currencyNotFound'
+          500:
+           $ref: '#/responses/internalError'
+
+  /currency/history/{currencySymbol}/{currencyTime}:
+    get:
+      tags:
+        - Currency
+      summary: 'Prepare historicial request'
+      description: 'Create request needed to prepare historical data'
+      operationId: createCurrencyHistoryRequest
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+       - $ref: '#/parameters/currencySymbolInPath'
+       - $ref: '#/parameters/currencyTimeInPath'
+      responses:
+        200:
+          $ref: '#/responses/requestAccepted'
+        400:
+          $ref: '#/responses/badRequest'
+        404:
+          $ref: '#/responses/currencyNotFound'
+        500:
+          $ref: '#/responses/internalError'
+
+  /currency/history/{historyId}:
+    get:
+      tags:
+        - Currency
+      summary: 'Get list of historical information'
+      description: 'Get historical information about specific currency'
+      operationId: getCurrencyHistory
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+       - $ref: '#/parameters/historyIdInPath'
+      responses:
+        200:
+           $ref: '#/responses/listOfCurrencies'
+        400:
+          $ref: '#/responses/badRequest'
+        404:
+          $ref: '#/responses/historyDataNotFound'
+        500:
+          $ref: '#/responses/internalError'
+
+  /currency/converter/{currencyFrom}/{currencyTo}/{value}:
+    get:
+      tags:
+       - Currency
+      summary: 'Get converted currency'
+      description: 'Convert from one currency to another'
+      operationId: getCurrencyConverter
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/currencyFromInPath'
+        - $ref: '#/parameters/currencyToInPath'
+        - $ref: '#/parameters/currencyValueInPath'
+      responses:
+        200:
+          $ref: '#/responses/exchangeCurrency'
+        400:
+          $ref: '#/responses/badRequest'
+        404:
+          $ref: '#/responses/currencyNotFound'
+        500:
+          $ref: '#/responses/internalError'
+
+  /currency/recommended:
+    post:
+      tags:
+        - Currency
+      summary: 'Get expert recommended'
+      description: 'Send currency to review by expert'
+      operationId: getRecommended
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/submitRecommendedCommand'
+      responses:
+        200:
+          $ref: '#/responses/processingCurrencyRecommended'
+        400:
+          $ref: '#/responses/badRequest'
+        404:
+          $ref: '#/responses/currencyNotFound'
+        500:
+          $ref: '#/responses/internalError'
+
+################################################################################
+#                                   DTO                                        #
+################################################################################
+definitions:
+
+  CurrencyDto:
+    title: Currency Dto
+    description: Information about currency
+    type: object
+    required:
+      - symbol
+      - price
+      - bid
+      - ask
+      - time
+    properties:
+      symbol:
+        type: string
+      price:
+        type: number
+      bid:
+        type: number
+      ask:
+        type: number
+      time:
+        type: integer
+  #
+  CurrencyExchangeDto:
+    title: Currency Exchange Dto
+    description: Information about currency exchange
+    type: object
+    required:
+      - value
+      - description
+      - time
+    properties:
+      value:
+        type: number
+      descirption:
+        type: string
+      time:
+        type: integer
+  #
+  OngoingRecomended:
+    title: Ongoing recommended
+    description: Request confirmed
+
+################################################################################
+#                                   Parameters                                 #
+################################################################################
+parameters:
+
+  currencySymbolInPath:
+    name: currencySymbol
+    in: path
+    description: 'currency symbol'
+    required: true
+    type: string
+  #
+  historyIdInPath:
+    name: historyId
+    in: path
+    description: 'history id'
+    required: true
+    type: string
+  #
+  currencyFromInPath:
+    name: currencyFrom
+    in: path
+    description: 'currency from exchange'
+    required: true
+    type: string
+  #
+  currencyToInPath:
+    name: currencyTo
+    in: path
+    description: 'currency to exchange'
+    required: true
+    type: string
+  #
+  currencyTimeInPath:
+    name: currencyTime
+    in: path
+    description: 'currency time'
+    required: true
+    type: integer
+  #
+  currencyValueInPath:
+    name: value
+    in: path
+    description: 'currency value'
+    required: true
+    type: number
+  #
+  submitRecommendedCommand:
+    name: Recommended Submit
+    in: body
+    description: attributies of recommended currency
+    required: true
+    schema:
+      type: object
+      required:
+        - currency
+        - value
+        - time
+        - email
+      properties:
+        currency:
+          type: string
+        value:
+          type: number
+        time:
+          type: integer
+        email:
+          type: string
+
+################################################################################
+#                                   Responses                                  #
+################################################################################
+responses:
+
+  requestAccepted:
+    description: 'Request accepted'
+  #
+  badRequest:
+    description: 'Bad Request'
+  #
+  currencyNotFound:
+    description: 'Currency not found'
+  #
+  historyDataNotFound:
+    description: 'history data not found'
+  #
+  internalError:
+    description: 'Internal Error'
+  #
+  singleCurrency:
+    description: Retrun single currency information
+    schema:
+      $ref: '#/definitions/CurrencyDto'
+  #
+  exchangeCurrency:
+    description: Return single exchange currency information
+    schema:
+      $ref: '#/definitions/CurrencyExchangeDto'
+  #
+  listOfCurrencies:
+    description: Return list of currencies for specific period of time
+    schema:
+      title: ArrayOfCurrencies
+      description: Array of Currencies
+      type: array
+      items:
+        $ref : '#/definitions/CurrencyDto'
+  #
+  processingCurrencyRecommended:
+    description: Return information about ongoing recommended process
+    schema:
+      $ref: '#/definitions/OngoingRecomended'

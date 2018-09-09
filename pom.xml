@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.app</groupId>
+	<artifactId>kafcam</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<modules>
+		<module>integration/service-starter</module>
+		<module>use-case</module>
+		<module>adapter/primary/rest</module>
+		<module>adapter/secondary/event-management</module>
+        <module>adapter/secondary/repository</module>
+		<module>port/primary/use-case</module>
+        <module>port/secondary/event-management</module>
+		<module>port/secondary/repository</module>
+	</modules>
+	<packaging>pom</packaging>
+
+	<name>kafcam</name>
+	<description>app</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.3.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<start-class>org.app.integration.service.starter.KafcamApplication</start-class>
+		<springfox.version>2.8.0</springfox.version>
+		<swagger.annotations.version>1.5.18</swagger.annotations.version>
+		<swagger.codegen.version>2.3.1</swagger.codegen.version>
+		<jackson.datatype.version>2.9.0</jackson.datatype.version>
+		<module.version>0.0.1-SNAPSHOT</module.version>
+		<javax.inject.version>1</javax.inject.version>
+        <mongo.db.version>2.0.3.RELEASE</mongo.db.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>${javax.inject.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+                    <!-- Version same as the spring boot -->
+					<version>2.0.3.RELEASE</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
