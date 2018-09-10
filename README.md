@@ -35,4 +35,4 @@ shared-domain - Through the process of separating the functionalities from monol
 ## Authors
 
 * **Maciej Cyrka** - [THRuM](https://github.com/THRuM)
-* **Roman Kubis** - [THRuM](https://github.com/drx92)
+* **Roman Kubis** - [drx92](https://github.com/drx92)
