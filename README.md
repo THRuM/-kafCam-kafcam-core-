@@ -22,15 +22,16 @@ We were looking for a way to play with a large number of data, as a result we fi
 [Linux](https://gist.github.com/THRuM/a0a34e7f5a5d458d81c3c909139481c0)
 [Windows](https://gist.github.com/THRuM/5b170625b80d7c7494634a5ca8c88594)
 
+### Project structure
 kafcam - is single point of entry, it is responsible for handling the user requests via REST api, orchestration of the use cases, making the snaphot of the data from Kafka topic
 
-cam - Camunda microservice, executes the BPMN
+[cam](https://github.com/THRuM/-kafCam-cam) - Camunda microservice, executes the BPMN
 
-kafprod - Responsible for communication with the external API, act as a producer for Kafka currency topic
+[kafprod](https://github.com/THRuM/-kafCam-kafprod) - Responsible for communication with the external API, act as a producer for Kafka currency topic
 
-kafwork - Handles the request for data that is not available in the snapshot, searches through the Kafka topic to find specific data for specific currency
+[kafwork](https://github.com/THRuM/-kafCam-kafwork) - Handles the request for data that is not available in the snapshot, searches through the Kafka topic to find specific data for specific currency
 
-shared-domain - Through the process of separating the functionalities from monolith to separate microservices we encountered duplication of domain classes. This project contains domain classes for use by other projects, includes as a dependency.
+[shared-domain](https://github.com/THRuM/-kafCam-shared-domain) - Through the process of separating the functionalities from monolith to separate microservices we encountered duplication of domain classes. This project contains domain classes for use by other projects, includes as a dependency.
 
 ## Authors
 
